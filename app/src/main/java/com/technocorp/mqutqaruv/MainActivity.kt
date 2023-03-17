@@ -5,7 +5,9 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.ui.Modifier
+import androidx.navigation.compose.rememberNavController
 import com.google.maps.android.compose.GoogleMap
+import com.technocorp.mqutqaruv.screens.navigation.Navigation
 import com.technocorp.mqutqaruv.ui.theme.MulteeTheme
 
 class MainActivity : ComponentActivity() {
@@ -14,10 +16,10 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
 
         setContent {
+            val navController = rememberNavController()
             MulteeTheme {
-                GoogleMap(
-                    modifier = Modifier.fillMaxSize( )
-                )
+
+                Navigation(navController = navController)
             }
         }
     }
