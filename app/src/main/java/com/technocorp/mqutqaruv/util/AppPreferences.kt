@@ -9,7 +9,7 @@ class SharedPref constructor(context: Context) {
 
     companion object {
 
-        private const val NAME = "AudioBookApp"
+        private const val NAME = "MQutqaruv"
         private const val MODE = Context.MODE_PRIVATE
         private var instance: SharedPref? = null
         fun getInstance(context: Context): SharedPref {
@@ -36,4 +36,11 @@ class SharedPref constructor(context: Context) {
             }
         }
 
+    var token: String?
+        get() = preferences.getString("access_token", "")
+        set(value) = preferences.edit {
+            if (value != null) {
+                it.putString("access_token", value)
+            }
+        }
 }

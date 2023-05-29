@@ -9,7 +9,9 @@ import androidx.navigation.compose.rememberNavController
 import com.google.maps.android.compose.GoogleMap
 import com.technocorp.mqutqaruv.screens.navigation.Navigation
 import com.technocorp.mqutqaruv.ui.theme.MulteeTheme
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
