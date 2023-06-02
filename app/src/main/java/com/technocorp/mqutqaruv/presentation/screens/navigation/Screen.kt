@@ -1,4 +1,4 @@
-package com.technocorp.mqutqaruv.screens.navigation
+package com.technocorp.mqutqaruv.presentation.screens.navigation
 
 import com.technocorp.mqutqaruv.R
 
