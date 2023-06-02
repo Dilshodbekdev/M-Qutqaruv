@@ -6,9 +6,9 @@ import okhttp3.Response
 class RequestInterceptor constructor(private val pref: SharedPref) : Interceptor {
 
     override fun intercept(chain: Interceptor.Chain): Response {
-        val token = "Bearer ${pref.token}"
+        val token = "Bearer ${pref.accessToken}"
         val newRequest = chain.request().newBuilder()
-        if (pref.token?.isNotEmpty()!!) {
+        if (pref.accessToken?.isNotEmpty()!!) {
             newRequest
                 .addHeader("Authorizations", token)
         }

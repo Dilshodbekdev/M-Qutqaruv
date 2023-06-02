@@ -21,7 +21,7 @@ android {
             useSupportLibrary true
         }
         // default build config
-        buildConfigField 'String', 'API_BASE_URL', '"https://164.90.229.4:8080/"'
+        buildConfigField 'String', 'API_BASE_URL', '"https://qutqaruv.technocorp.uz/"'
     }
 
     buildTypes {
@@ -82,7 +82,7 @@ dependencies {
     implementation platform('org.jetbrains.kotlin:kotlin-bom:1.8.0')
 
     // Navigation
-    implementation 'androidx.navigation:navigation-compose:2.4.2'
+    implementation 'androidx.navigation:navigation-compose:2.5.3'
 
     // Hilt
     implementation "com.google.dagger:hilt-android:2.44.2"

@@ -1,6 +1,9 @@
 package com.technocorp.mqutqaruv.di
 
 import com.technocorp.mqutqaruv.BuildConfig
+import com.technocorp.mqutqaruv.data.remote.api.Api
+import com.technocorp.mqutqaruv.data.repository.MainRepositoryImpl
+import com.technocorp.mqutqaruv.domain.repository.MainRepository
 import com.technocorp.mqutqaruv.util.RequestInterceptor
 import com.technocorp.mqutqaruv.util.SharedPref
 import dagger.Module
@@ -27,6 +30,19 @@ object NetworkModule {
             baseUrl(BuildConfig.API_BASE_URL)
         }.build()
     }
+
+    @Singleton
+    @Provides
+    fun provideApi(retrofit: Retrofit): Api {
+        return retrofit.create(Api::class.java)
+    }
+
+    @Singleton
+    @Provides
+    fun provideRepo(
+        api: Api,
+        pref: SharedPref
+    ): MainRepository = MainRepositoryImpl(api)
 
     @Provides
     @Singleton

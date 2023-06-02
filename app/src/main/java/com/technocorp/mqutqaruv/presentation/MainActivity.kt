@@ -1,4 +1,4 @@
-package com.technocorp.mqutqaruv
+package com.technocorp.mqutqaruv.presentation
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -7,7 +7,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.ui.Modifier
 import androidx.navigation.compose.rememberNavController
 import com.google.maps.android.compose.GoogleMap
-import com.technocorp.mqutqaruv.screens.navigation.Navigation
+import com.technocorp.mqutqaruv.presentation.screens.navigation.Navigation
 import com.technocorp.mqutqaruv.ui.theme.MulteeTheme
 import dagger.hilt.android.AndroidEntryPoint
 

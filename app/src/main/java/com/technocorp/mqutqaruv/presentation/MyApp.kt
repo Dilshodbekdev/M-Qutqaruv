@@ -1,4 +1,4 @@
-package com.technocorp.mqutqaruv
+package com.technocorp.mqutqaruv.presentation
 
 import android.app.Application
 import android.app.NotificationChannel
