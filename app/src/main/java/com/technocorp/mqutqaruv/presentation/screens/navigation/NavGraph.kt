@@ -25,9 +25,9 @@ fun Navigation(navController: NavHostController) {
 
             SignInScreen {
                 navController.navigate(Screen.Maps.route) {
-                    popUpTo(route = Screen.Register.route) {
+                    /*popUpTo(route = Screen.Register.route) {
                         inclusive = true
-                    }
+                    }*/
                 }
             }
         }

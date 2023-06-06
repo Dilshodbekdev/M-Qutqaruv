@@ -4,5 +4,5 @@
     <string name="start_navigation">Start Navigation</string>
     <string name="user_location_permission_explanation">This app needs location permissions to show its functionality.</string>
     <string name="user_location_permission_not_granted">You didn\'t grant location permissions.</string>
-    <string name="google_maps_key">AIzaSyAXBL8Di4daLkr3noV84pUMKpYoPjpM3_k</string>
+    <string name="google_maps_key">AIzaSyCQYU45g7n6tYmmKaXVFPotHFH23CUJrpc</string>
 </resources>
