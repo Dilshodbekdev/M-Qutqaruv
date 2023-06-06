@@ -51,4 +51,12 @@ class SharedPref constructor(context: Context) {
                 it.putString("access_token", value)
             }
         }
+
+    var id: Int?
+        get() = preferences.getInt("access_token", 0)
+        set(value) = preferences.edit {
+            if (value != null) {
+                it.putInt("access_token", value)
+            }
+        }
 }

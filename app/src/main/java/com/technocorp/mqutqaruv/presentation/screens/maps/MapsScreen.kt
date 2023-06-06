@@ -9,6 +9,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.google.android.gms.maps.model.CameraPosition
 import com.google.android.gms.maps.model.LatLng
@@ -21,15 +22,24 @@ import com.google.maps.android.compose.MarkerState
 import com.google.maps.android.compose.rememberCameraPositionState
 
 @Composable
-fun MapsScreen(navController: NavHostController) {
+fun MapsScreen(navController: NavHostController, mapViewModel: MapViewModel = hiltViewModel()) {
 
-    val singapore = LatLng(1.35, 103.87)
+    val state = mapViewModel.state
+
+    var currentLocation by remember {
+        mutableStateOf(LatLng(41.19830328616144, 69.22181805224837))
+    }
     val cameraPositionState = rememberCameraPositionState {
-        position = CameraPosition.fromLatLngZoom(singapore, 10f)
+        position = CameraPosition.fromLatLngZoom(currentLocation, 20f)
     }
     var uiSettings by remember { mutableStateOf(MapUiSettings()) }
     var properties by remember {
         mutableStateOf(MapProperties(mapType = MapType.SATELLITE))
+    }
+
+    state.currentLocation?.let {
+        currentLocation = LatLng(it.latitude, it.longitude)
+        cameraPositionState.position = CameraPosition.fromLatLngZoom(currentLocation, 20f)
     }
 
     Box(modifier = Modifier.fillMaxSize()) {
@@ -40,7 +50,7 @@ fun MapsScreen(navController: NavHostController) {
             uiSettings = uiSettings
         ) {
             Marker(
-                state = MarkerState(position = singapore),
+                state = MarkerState(position = currentLocation),
                 title = "Singapore",
                 snippet = "Marker in Singapore"
             )

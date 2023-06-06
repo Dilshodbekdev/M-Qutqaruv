@@ -6,7 +6,6 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
-import androidx.compose.material.icons.Icons
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -20,13 +19,14 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.technocorp.mqutqaruv.R
 import com.technocorp.mqutqaruv.data.remote.dto.LoginBody
-import com.technocorp.mqutqaruv.domain.model.Login
-import com.technocorp.mqutqaruv.presentation.screens.navigation.Screen
+import com.technocorp.mqutqaruv.data.remote.dto.location_create.CreateLocationBody
+import kotlinx.coroutines.launch
 
 @Composable
 fun SignInScreen(viewModel: LoginViewModel = hiltViewModel(), onLoginClick: () -> Unit) {
 
-    val state = viewModel.state
+    val stateLogin = viewModel.stateLogin
+    val stateCreateLocation = viewModel.stateLocationCreate
 
     var username by remember { mutableStateOf("") }
     var usernameError by remember { mutableStateOf(false) }
@@ -34,14 +34,28 @@ fun SignInScreen(viewModel: LoginViewModel = hiltViewModel(), onLoginClick: () -
     var passwordError by remember { mutableStateOf(false) }
     var passwordHidden by remember { mutableStateOf(true) }
 
-    state.login.let {
+    val snackbarHostState = remember { SnackbarHostState() }
+    val scope = rememberCoroutineScope()
+
+    stateLogin.login.let {
         if (it?.access?.isNotEmpty() == true) {
-            viewModel.saveToken(it ?: Login("empty", "empty"))
+            viewModel.saveToken(it)
+            LaunchedEffect(key1 = it.access) {
+                viewModel.createLocation(username)
+            }
+        }
+    }
+
+    stateCreateLocation.createLocation?.let {
+        if (it.id != 0) {
+            viewModel.saveId(it.id)
             onLoginClick()
         }
     }
 
-    Scaffold(modifier = Modifier.fillMaxSize()) { padding ->
+    Scaffold(
+        modifier = Modifier.fillMaxSize(),
+        snackbarHost = { SnackbarHost(snackbarHostState) }) { padding ->
         Box(
             modifier = Modifier
                 .fillMaxSize()
@@ -139,11 +153,11 @@ fun SignInScreen(viewModel: LoginViewModel = hiltViewModel(), onLoginClick: () -
                 modifier = Modifier.fillMaxSize(),
                 contentAlignment = Alignment.Center
             ) {
-                if (state.isLoading) {
+                if (stateLogin.isLoading) {
                     CircularProgressIndicator()
-                } else if (state.error != null) {
+                } else if (stateLogin.error != null) {
                     Text(
-                        text = state.error,
+                        text = stateLogin.error,
                         color = MaterialTheme.colors.error
                     )
                 }

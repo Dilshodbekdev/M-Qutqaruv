@@ -1,5 +1,8 @@
 package com.technocorp.mqutqaruv.di
 
+import android.app.Application
+import com.google.android.gms.location.FusedLocationProviderClient
+import com.google.android.gms.location.LocationServices
 import com.technocorp.mqutqaruv.BuildConfig
 import com.technocorp.mqutqaruv.data.remote.api.Api
 import com.technocorp.mqutqaruv.data.repository.MainRepositoryImpl
@@ -74,5 +77,11 @@ object NetworkModule {
     @Provides
     fun provideRequestInterceptor(prefs: SharedPref): RequestInterceptor {
         return RequestInterceptor(prefs)
+    }
+
+    @Provides
+    @Singleton
+    fun provideFusedLocationProviderClient(app: Application): FusedLocationProviderClient {
+        return LocationServices.getFusedLocationProviderClient(app)
     }
 }
