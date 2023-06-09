@@ -19,7 +19,7 @@ class MainRepositoryImpl @Inject constructor(
         return api.createLocation(body)
     }
 
-    override suspend fun updateLocation(id: Int): CreateLocationResponse {
-        return api.updateLocation(id)
+    override suspend fun updateLocation(id: Int, body: CreateLocationBody): CreateLocationResponse {
+        return api.updateLocation(id, body)
     }
 }

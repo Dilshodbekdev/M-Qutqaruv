@@ -1,5 +1,6 @@
 package com.technocorp.mqutqaruv.domain.usecase
 
+import com.technocorp.mqutqaruv.data.remote.dto.location_create.CreateLocationBody
 import com.technocorp.mqutqaruv.data.remote.dto.location_create.toCreateLocation
 import com.technocorp.mqutqaruv.data.repository.MainRepositoryImpl
 import com.technocorp.mqutqaruv.domain.model.CreateLocation
@@ -14,10 +15,10 @@ class UpdateLocationUseCase @Inject constructor(
     private val repository: MainRepositoryImpl
 ) {
 
-    operator fun invoke(id: Int): Flow<Resource<CreateLocation>> = flow {
+    operator fun invoke(id: Int, body: CreateLocationBody): Flow<Resource<CreateLocation>> = flow {
         try {
             emit(Resource.Loading<CreateLocation>())
-            val data = repository.updateLocation(id).toCreateLocation()
+            val data = repository.updateLocation(id, body).toCreateLocation()
             emit(Resource.Success<CreateLocation>(data))
         } catch (e: HttpException) {
             emit(

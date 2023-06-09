@@ -20,6 +20,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.technocorp.mqutqaruv.R
 import com.technocorp.mqutqaruv.data.remote.dto.LoginBody
 import com.technocorp.mqutqaruv.data.remote.dto.location_create.CreateLocationBody
+import com.technocorp.mqutqaruv.presentation.screens.components.PhoneField
 import kotlinx.coroutines.launch
 
 @Composable
@@ -49,6 +50,7 @@ fun SignInScreen(viewModel: LoginViewModel = hiltViewModel(), onLoginClick: () -
     stateCreateLocation.createLocation?.let {
         if (it.id != 0) {
             viewModel.saveId(it.id)
+            viewModel.saveAutoNumber(username)
             onLoginClick()
         }
     }
@@ -78,7 +80,7 @@ fun SignInScreen(viewModel: LoginViewModel = hiltViewModel(), onLoginClick: () -
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 Text(
-                    text = "Kirish",
+                    text = "Sign In",
                     style = MaterialTheme.typography.h4,
                     color = Color.Black
                 )
@@ -88,7 +90,7 @@ fun SignInScreen(viewModel: LoginViewModel = hiltViewModel(), onLoginClick: () -
                         .fillMaxWidth()
                         .height(56.dp),
                     value = username,
-                    placeholder = { Text(text = "Username") },
+                    placeholder = { Text(text = "Auto number") },
                     onValueChange = {
                         username = it
                         if (it.isNotEmpty()) usernameError = false
@@ -143,7 +145,7 @@ fun SignInScreen(viewModel: LoginViewModel = hiltViewModel(), onLoginClick: () -
                     colors = ButtonDefaults.buttonColors(colorResource(id = R.color.main_red))
                 ) {
                     Text(
-                        text = "Kirish",
+                        text = "Sign In",
                         style = MaterialTheme.typography.body2,
                         color = Color.White
                     )

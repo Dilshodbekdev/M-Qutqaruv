@@ -47,6 +47,12 @@ class LoginViewModel @Inject constructor(
         }
     }
 
+    fun saveAutoNumber(autoNumber: String) {
+        viewModelScope.launch {
+            sharedPref.autoNumber = autoNumber
+        }
+    }
+
     fun login(body: LoginBody) {
         loginUseCase(body).onEach { resource ->
             when (resource) {

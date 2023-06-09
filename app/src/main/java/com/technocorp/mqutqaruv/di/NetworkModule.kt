@@ -7,6 +7,8 @@ import com.technocorp.mqutqaruv.BuildConfig
 import com.technocorp.mqutqaruv.data.remote.api.Api
 import com.technocorp.mqutqaruv.data.repository.MainRepositoryImpl
 import com.technocorp.mqutqaruv.domain.repository.MainRepository
+import com.technocorp.mqutqaruv.util.DefaultLocationClient
+import com.technocorp.mqutqaruv.util.LocationClient
 import com.technocorp.mqutqaruv.util.RequestInterceptor
 import com.technocorp.mqutqaruv.util.SharedPref
 import dagger.Module
@@ -75,13 +77,25 @@ object NetworkModule {
     }
 
     @Provides
-    fun provideRequestInterceptor(prefs: SharedPref): RequestInterceptor {
-        return RequestInterceptor(prefs)
+    fun provideRequestInterceptor(
+        prefs: SharedPref,
+        httpLoggingInterceptor: HttpLoggingInterceptor
+    ): RequestInterceptor {
+        return RequestInterceptor(prefs, httpLoggingInterceptor)
     }
 
     @Provides
     @Singleton
     fun provideFusedLocationProviderClient(app: Application): FusedLocationProviderClient {
         return LocationServices.getFusedLocationProviderClient(app)
+    }
+
+    @Provides
+    @Singleton
+    fun provideLocationClient(
+        app: Application,
+        fusedLocationProviderClient: FusedLocationProviderClient
+    ): LocationClient {
+        return DefaultLocationClient(app, fusedLocationProviderClient)
     }
 }

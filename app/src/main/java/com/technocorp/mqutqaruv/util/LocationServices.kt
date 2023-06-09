@@ -9,6 +9,10 @@ import android.os.IBinder
 import androidx.core.app.NotificationCompat
 import com.google.android.gms.location.LocationServices
 import com.technocorp.mqutqaruv.R
+import com.technocorp.mqutqaruv.data.remote.api.Api
+import com.technocorp.mqutqaruv.data.remote.dto.location_create.CreateLocationBody
+import com.technocorp.mqutqaruv.domain.usecase.UpdateLocationUseCase
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
@@ -18,12 +22,19 @@ import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import javax.inject.Inject
 
+@AndroidEntryPoint
 class LocationService : Service() {
 
     private val serviceScope = CoroutineScope(SupervisorJob() + Dispatchers.IO)
 
     @Inject
     lateinit var locationClient: LocationClient
+
+    @Inject
+    lateinit var useCase: UpdateLocationUseCase
+
+    @Inject
+    lateinit var pref: SharedPref
 
     override fun onBind(p0: Intent?): IBinder? {
         return null
@@ -52,6 +63,13 @@ class LocationService : Service() {
             .getLocationUpdates(10000L)
             .catch { e -> e.printStackTrace() }
             .onEach { location ->
+                useCase(
+                    id = pref.id ?: 0, body = CreateLocationBody(
+                        avto_raqam = pref.autoNumber ?: "",
+                        longtitude = location.longitude,
+                        latitude = location.latitude
+                    )
+                ).launchIn(serviceScope)
                 val lat = location.latitude.toString().takeLast(3)
                 val long = location.longitude.toString().takeLast(3)
                 val updatedNotification = notification.setContentText(

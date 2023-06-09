@@ -11,5 +11,5 @@ interface MainRepository {
 
     suspend fun createLocation(body: CreateLocationBody): CreateLocationResponse
 
-    suspend fun updateLocation(id: Int): CreateLocationResponse
+    suspend fun updateLocation(id: Int, body: CreateLocationBody): CreateLocationResponse
 }

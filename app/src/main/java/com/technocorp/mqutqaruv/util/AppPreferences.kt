@@ -44,19 +44,27 @@ class SharedPref constructor(context: Context) {
             }
         }
 
-    var refreshToken: String?
-        get() = preferences.getString("access_token", "")
+    var autoNumber: String?
+        get() = preferences.getString("auto_number", "")
         set(value) = preferences.edit {
             if (value != null) {
-                it.putString("access_token", value)
+                it.putString("auto_number", value)
+            }
+        }
+
+    var refreshToken: String?
+        get() = preferences.getString("refresh_token", "")
+        set(value) = preferences.edit {
+            if (value != null) {
+                it.putString("refresh_token", value)
             }
         }
 
     var id: Int?
-        get() = preferences.getInt("access_token", 0)
+        get() = preferences.getInt("id", 0)
         set(value) = preferences.edit {
             if (value != null) {
-                it.putInt("access_token", value)
+                it.putInt("id", value)
             }
         }
 }

@@ -37,14 +37,14 @@ class MainActivity : ComponentActivity() {
             0
         )
 
-        val register = sharedPref.accessToken
+        val register = sharedPref.accessToken ?: ""
 
         setContent {
             val navController = rememberNavController()
             MulteeTheme {
                 NavHost(
                     navController = navController,
-                    startDestination = if (register?.isNotEmpty() == true) Screen.Maps.route else Screen.Register.route
+                    startDestination = if (register.isNotEmpty() == true) Screen.Maps.route else Screen.Register.route
                 ) {
                     composable(route = Screen.Register.route) {
 
